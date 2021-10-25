@@ -1,6 +1,14 @@
 import argparse
 import sys
+from util import *
 
+
+def fq_sumcsv(path_file, col_number):
+    sum_col = 0
+    for row in  rows_from_a_csv_file(path_file):
+        sum_col += int(row[col_number])
+    print(sum_col)
+    return sum_col
 
 def fq_finder(args):
     text = args.text
@@ -86,6 +94,19 @@ parser_listapps.add_argument(
     type=str,
     help='movement sequence. Example: "1-left 2-right 3-up 5-down"',
     dest="mv_sequence",
+)
+
+# Create a fq_find_in_doc subcommand
+parser_listapps = subparsers.add_parser(
+    "fq_sumcsv",
+    help="""Give a Comma Separated File (csv) and a column number (zero being the left most column) return the sum of all the entries in that column
+Assume that all the entries in the CSV are numbers.
+Assume also that there are no column headers.""",
+)
+parser_listapps.set_defaults(func=fq_sumcsv)
+parser_listapps.add_argument("--file-path", type=str, help="path to read csv", dest="file_csv")
+parser_listapps.add_argument(
+    "--col", type=str, help="num column", dest="col"
 )
 
 
