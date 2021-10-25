@@ -3,10 +3,12 @@ import sys
 from util import *
 
 
-def fq_sumcsv(path_file, col_number):
+def fq_sumcsv(args):
+    path_file = args.file_path
+    col_index = args.col
     sum_col = 0
-    for row in  rows_from_a_csv_file(path_file):
-        sum_col += int(row[col_number])
+    for row in  read_csv(path_file):
+        sum_col += int(row[col_index])
     print(sum_col)
     return sum_col
 
@@ -104,9 +106,9 @@ Assume that all the entries in the CSV are numbers.
 Assume also that there are no column headers.""",
 )
 parser_listapps.set_defaults(func=fq_sumcsv)
-parser_listapps.add_argument("--file-path", type=str, help="path to read csv", dest="file_csv")
+parser_listapps.add_argument("--file-path", type=str, help="path to read csv", dest="file_path")
 parser_listapps.add_argument(
-    "--col", type=str, help="num column", dest="col"
+    "--col", type=int, help="num column", dest="col"
 )
 
 
